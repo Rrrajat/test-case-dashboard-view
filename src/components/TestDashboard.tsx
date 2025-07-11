@@ -1,10 +1,9 @@
-
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, XCircle, AlertCircle, Clock, BarChart3, TestTube2 } from 'lucide-react';
+import { CheckCircle2, XCircle, AlertCircle, Clock, BarChart3, TestTube2, TrendingUp, Activity } from 'lucide-react';
 import StatCard from './StatCard';
 import CategoryBreakdown from './CategoryBreakdown';
 import GHAInfo from './GHAInfo';
+import TestOverview from './TestOverview';
 
 // Mock data - replace with real data from your API
 const mockTestData = {
@@ -117,22 +116,33 @@ const TestDashboard = () => {
   const skipRate = Math.round((overall.skipped / overall.total) * 100);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-3">
-            <TestTube2 className="w-10 h-10 text-blue-600" />
-            <h1 className="text-4xl font-bold text-gray-900">Test Dashboard</h1>
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+      <div className="max-w-7xl mx-auto p-8 space-y-10">
+        {/* Modern Header */}
+        <div className="text-center space-y-6 py-8">
+          <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-gradient-to-r from-primary/10 to-blue-500/10 backdrop-blur-sm border border-border/20">
+            <TestTube2 className="w-8 h-8 text-primary mr-3" />
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+              Test Analytics
+            </h1>
           </div>
-          <p className="text-gray-600 text-lg">Comprehensive overview of test execution results and CI/CD pipeline status</p>
+          <p className="text-muted-foreground text-xl max-w-2xl mx-auto leading-relaxed">
+            Real-time insights into test execution and CI/CD pipeline performance
+          </p>
         </div>
 
-        {/* Overall Statistics */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <BarChart3 className="w-6 h-6 text-gray-700" />
-            <h2 className="text-2xl font-semibold text-gray-900">Overall Statistics</h2>
+        {/* Key Metrics Section */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <TrendingUp className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="text-2xl font-semibold text-foreground">Key Metrics</h2>
+            </div>
+            <Badge variant="outline" className="text-sm px-4 py-2">
+              Last updated: 2 mins ago
+            </Badge>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -170,52 +180,13 @@ const TestDashboard = () => {
           </div>
         </div>
 
-        {/* Test Status Summary */}
-        <Card className="border-0 shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <AlertCircle className="w-5 h-5" />
-              Test Status Summary
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                <span className="text-sm font-medium">Passed: {overall.passed}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-                <span className="text-sm font-medium">Failed: {overall.failed}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
-                <span className="text-sm font-medium">Skipped: {overall.skipped}</span>
-              </div>
-              <Badge variant="outline" className="ml-auto">
-                Success Rate: {passRate}%
-              </Badge>
-            </div>
-            
-            {/* Progress Bar */}
-            <div className="mt-4 w-full bg-gray-200 rounded-full h-3">
-              <div className="flex h-full rounded-full overflow-hidden">
-                <div 
-                  className="bg-green-500 transition-all duration-500"
-                  style={{ width: `${passRate}%` }}
-                ></div>
-                <div 
-                  className="bg-red-500 transition-all duration-500"
-                  style={{ width: `${failRate}%` }}
-                ></div>
-                <div 
-                  className="bg-yellow-500 transition-all duration-500"
-                  style={{ width: `${skipRate}%` }}
-                ></div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Test Overview Section */}
+        <TestOverview 
+          passRate={passRate}
+          failRate={failRate}
+          skipRate={skipRate}
+          overall={overall}
+        />
 
         {/* GitHub Actions Section */}
         <GHAInfo runs={mockGHAData} />
