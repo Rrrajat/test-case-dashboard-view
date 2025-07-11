@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { CheckCircle2, XCircle, AlertCircle, Clock, BarChart3, TestTube2 } from 'lucide-react';
 import StatCard from './StatCard';
 import CategoryBreakdown from './CategoryBreakdown';
+import GHAInfo from './GHAInfo';
 
 // Mock data - replace with real data from your API
 const mockTestData = {
@@ -52,6 +53,62 @@ const mockTestData = {
   ]
 };
 
+// Mock GitHub Actions data
+const mockGHAData = [
+  {
+    runId: '#1234567890',
+    workflowName: 'CI/CD Pipeline',
+    branch: 'main',
+    environment: 'Production',
+    status: 'success' as const,
+    progress: 100,
+    startTime: '2 hours ago',
+    duration: '8m 32s',
+    triggeredBy: 'john.doe',
+    commitHash: 'a1b2c3d4',
+    commitMessage: 'Fix: Resolve authentication timeout issues in login flow'
+  },
+  {
+    runId: '#1234567889',
+    workflowName: 'Test Suite',
+    branch: 'feature/dashboard-updates',
+    environment: 'Staging',
+    status: 'in_progress' as const,
+    progress: 65,
+    startTime: '15 minutes ago',
+    duration: '5m 12s',
+    triggeredBy: 'jane.smith',
+    commitHash: 'e5f6g7h8',
+    commitMessage: 'feat: Add new dashboard components with improved UI'
+  },
+  {
+    runId: '#1234567888',
+    workflowName: 'Security Scan',
+    branch: 'develop',
+    environment: 'Development',
+    status: 'failure' as const,
+    progress: 45,
+    startTime: '1 hour ago',
+    duration: '3m 45s',
+    triggeredBy: 'automated',
+    commitHash: 'i9j0k1l2',
+    commitMessage: 'refactor: Update dependency versions and security patches'
+  },
+  {
+    runId: '#1234567887',
+    workflowName: 'Deploy to Staging',
+    branch: 'release/v2.1.0',
+    environment: 'Staging',
+    status: 'pending' as const,
+    progress: 0,
+    startTime: '5 minutes ago',
+    duration: '0m 0s',
+    triggeredBy: 'release.bot',
+    commitHash: 'm3n4o5p6',
+    commitMessage: 'release: Prepare version 2.1.0 with new features'
+  }
+];
+
 const TestDashboard = () => {
   const { overall, categories } = mockTestData;
   
@@ -68,7 +125,7 @@ const TestDashboard = () => {
             <TestTube2 className="w-10 h-10 text-blue-600" />
             <h1 className="text-4xl font-bold text-gray-900">Test Dashboard</h1>
           </div>
-          <p className="text-gray-600 text-lg">Comprehensive overview of test execution results</p>
+          <p className="text-gray-600 text-lg">Comprehensive overview of test execution results and CI/CD pipeline status</p>
         </div>
 
         {/* Overall Statistics */}
@@ -159,6 +216,9 @@ const TestDashboard = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* GitHub Actions Section */}
+        <GHAInfo runs={mockGHAData} />
 
         {/* Category Breakdown */}
         <CategoryBreakdown categories={categories} />
