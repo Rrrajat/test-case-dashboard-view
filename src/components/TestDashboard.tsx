@@ -121,166 +121,161 @@ const TestDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-900 relative overflow-hidden">
-      {/* Background Elements */}
+    <div className="min-h-screen bg-white relative overflow-hidden">
+      {/* Subtle Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-purple-600/30 to-pink-600/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-emerald-600/10 to-teal-600/10 rounded-full blur-3xl" />
+        <div className="absolute top-32 right-20 w-96 h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full blur-3xl opacity-60" />
+        <div className="absolute bottom-40 left-16 w-80 h-80 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-full blur-3xl opacity-40" />
+        <div className="absolute top-1/3 left-1/3 w-72 h-72 bg-gradient-to-br from-orange-50 to-pink-50 rounded-full blur-3xl opacity-30" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-8 py-12">
         
-        {/* Asymmetric Header */}
-        <div className="flex flex-col lg:flex-row items-start justify-between mb-16 gap-8">
+        {/* Fluid Header Layout */}
+        <div className="flex items-end justify-between mb-20">
           <div className="flex-1">
-            <div className="inline-flex items-center gap-2 mb-6">
-              <div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-pulse" />
-              <span className="text-purple-300 text-sm font-medium tracking-wider uppercase">Live Analytics</span>
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full" />
+              <span className="text-blue-600 text-sm font-semibold tracking-widest uppercase">Live Dashboard</span>
             </div>
-            <h1 className="text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-pink-200 leading-none tracking-tight mb-4">
+            <h1 className="text-7xl font-black text-slate-900 leading-none mb-6">
               Test
               <br />
-              Dashboard
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Analytics</span>
             </h1>
-            <p className="text-xl text-slate-400 max-w-lg leading-relaxed">
-              Real-time insights into your test execution and CI/CD pipeline performance
+            <p className="text-xl text-slate-600 max-w-xl leading-relaxed">
+              Monitor your test execution and CI/CD pipeline with real-time insights and performance metrics
             </p>
           </div>
           
-          {/* Floating Stats */}
-          <div className="relative">
-            <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-3xl rotate-12 blur-xl" />
-            <div className="relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
-              <div className="text-center space-y-2">
-                <div className="text-4xl font-bold text-emerald-400">{passRate}%</div>
-                <div className="text-sm text-slate-400 uppercase tracking-wider">Success Rate</div>
-              </div>
+          {/* Floating Score */}
+          <div className="relative mr-12">
+            <div className="absolute -inset-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full blur-2xl opacity-60" />
+            <div className="relative w-32 h-32 bg-white rounded-full shadow-2xl flex flex-col items-center justify-center border border-slate-100">
+              <div className="text-3xl font-black text-emerald-600">{passRate}%</div>
+              <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Health</div>
             </div>
           </div>
         </div>
 
-        {/* Organic Metrics Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20">
-          
-          {/* Large Total Tests */}
-          <div className="lg:col-span-5 relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-[2rem] blur-xl" />
-            <div className="relative bg-slate-900/60 backdrop-blur-2xl rounded-[2rem] p-8 border border-white/10 h-full">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center">
-                  <TestTube2 className="w-7 h-7 text-white" />
-                </div>
+        {/* Flowing Metrics Section */}
+        <div className="relative mb-24">
+          {/* Main Stats Flow */}
+          <div className="flex flex-wrap items-start gap-12 mb-12">
+            <div className="flex items-baseline gap-4">
+              <div className="text-6xl font-black text-slate-900">{overall.total}</div>
+              <div className="text-lg text-slate-500 font-medium">Total Tests</div>
+            </div>
+            
+            <div className="h-16 w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent" />
+            
+            <div className="flex items-center gap-8">
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 bg-emerald-500 rounded-full" />
                 <div>
-                  <div className="text-5xl font-black text-white">{overall.total}</div>
-                  <div className="text-slate-400 text-lg">Total Tests</div>
+                  <div className="text-3xl font-bold text-emerald-600">{overall.passed}</div>
+                  <div className="text-sm text-slate-500 -mt-1">Passed</div>
                 </div>
               </div>
               
-              {/* Curved Progress Bar */}
-              <div className="space-y-4">
-                <div className="flex justify-between text-sm">
-                  <span className="text-slate-400">Health Score</span>
-                  <span className="text-white font-semibold">{passRate}%</span>
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 bg-red-500 rounded-full" />
+                <div>
+                  <div className="text-3xl font-bold text-red-600">{overall.failed}</div>
+                  <div className="text-sm text-slate-500 -mt-1">Failed</div>
                 </div>
-                <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
-                  <div className="flex h-full">
-                    <div 
-                      className="bg-gradient-to-r from-emerald-400 to-green-400"
-                      style={{ width: `${passRate}%` }}
-                    />
-                    <div 
-                      className="bg-gradient-to-r from-red-400 to-pink-400"
-                      style={{ width: `${failRate}%` }}
-                    />
-                    <div 
-                      className="bg-gradient-to-r from-yellow-400 to-orange-400"
-                      style={{ width: `${skipRate}%` }}
-                    />
-                  </div>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 bg-yellow-500 rounded-full" />
+                <div>
+                  <div className="text-3xl font-bold text-yellow-600">{overall.skipped}</div>
+                  <div className="text-sm text-slate-500 -mt-1">Skipped</div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Stacked Mini Stats */}
-          <div className="lg:col-span-7 space-y-4">
-            {[
-              { value: overall.passed, label: 'Passed', color: 'from-emerald-500 to-green-500', bg: 'from-emerald-500/20 to-green-500/20' },
-              { value: overall.failed, label: 'Failed', color: 'from-red-500 to-pink-500', bg: 'from-red-500/20 to-pink-500/20' },
-              { value: overall.skipped, label: 'Skipped', color: 'from-yellow-500 to-orange-500', bg: 'from-yellow-500/20 to-orange-500/20' }
-            ].map((stat, index) => (
-              <div key={index} className="relative group">
-                <div className={`absolute inset-0 bg-gradient-to-r ${stat.bg} rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300`} />
-                <div className="relative bg-slate-900/40 backdrop-blur-xl rounded-2xl p-6 border border-white/10 flex items-center justify-between group-hover:bg-slate-900/60 transition-all duration-300">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-4 h-4 bg-gradient-to-r ${stat.color} rounded-full`} />
-                    <span className="text-slate-300 font-medium">{stat.label}</span>
-                  </div>
-                  <div className="text-2xl font-bold text-white">{stat.value}</div>
-                </div>
+          {/* Organic Progress Visualization */}
+          <div className="relative">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-lg font-semibold text-slate-700">Test Health Distribution</span>
+              <span className="text-2xl font-bold text-slate-900">{passRate}% Success</span>
+            </div>
+            <div className="h-6 bg-slate-100 rounded-full overflow-hidden shadow-inner">
+              <div className="flex h-full">
+                <div 
+                  className="bg-gradient-to-r from-emerald-400 to-emerald-500 transition-all duration-1000 ease-out"
+                  style={{ width: `${passRate}%` }}
+                />
+                <div 
+                  className="bg-gradient-to-r from-red-400 to-red-500 transition-all duration-1000 ease-out"
+                  style={{ width: `${failRate}%` }}
+                />
+                <div 
+                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 transition-all duration-1000 ease-out"
+                  style={{ width: `${skipRate}%` }}
+                />
               </div>
-            ))}
+            </div>
           </div>
         </div>
 
-        {/* Creative Category Grid */}
-        <div className="mb-20">
-          <h2 className="text-4xl font-bold text-white mb-8 tracking-tight">Test Categories</h2>
+        {/* Organic Category Layout */}
+        <div className="mb-24">
+          <h2 className="text-4xl font-black text-slate-900 mb-12">Test Categories</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="space-y-8">
             {categories.map((category, index) => {
               const categoryPassRate = Math.round((category.passed / category.total) * 100);
-              const isHighPerforming = categoryPassRate >= 80;
+              const isEven = index % 2 === 0;
               
               return (
                 <div 
                   key={index}
-                  className={`relative group ${index % 2 === 0 ? 'lg:translate-y-8' : ''}`}
+                  className={`flex items-center gap-12 ${isEven ? 'flex-row' : 'flex-row-reverse'} group`}
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${
-                    isHighPerforming 
-                      ? 'from-emerald-600/30 to-teal-600/30' 
-                      : 'from-orange-600/30 to-red-600/30'
-                  } rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500`} />
-                  
-                  <div className="relative bg-slate-900/50 backdrop-blur-2xl rounded-3xl p-8 border border-white/10 group-hover:border-white/20 transition-all duration-300">
-                    <div className="mb-6">
-                      <h3 className="text-xl font-bold text-white mb-2">{category.name}</h3>
-                      <div className="text-sm text-slate-400">{category.total} tests</div>
-                    </div>
+                  {/* Category Info */}
+                  <div className={`flex-1 ${isEven ? 'text-left' : 'text-right'}`}>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-2">{category.name}</h3>
+                    <div className="text-slate-500 mb-4">{category.total} total tests</div>
                     
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-end">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-emerald-400">{category.passed}</div>
-                          <div className="text-xs text-slate-500">PASS</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-red-400">{category.failed}</div>
-                          <div className="text-xs text-slate-500">FAIL</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-yellow-400">{category.skipped}</div>
-                          <div className="text-xs text-slate-500">SKIP</div>
-                        </div>
+                    <div className={`flex items-center gap-6 ${isEven ? 'justify-start' : 'justify-end'}`}>
+                      <div className="text-center">
+                        <div className="text-xl font-bold text-emerald-600">{category.passed}</div>
+                        <div className="text-xs text-slate-500 uppercase tracking-wide">Pass</div>
                       </div>
-                      
-                      <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                        <div className="flex h-full">
-                          <div 
-                            className="bg-gradient-to-r from-emerald-400 to-green-400"
-                            style={{ width: `${(category.passed / category.total) * 100}%` }}
-                          />
-                          <div 
-                            className="bg-gradient-to-r from-red-400 to-pink-400"
-                            style={{ width: `${(category.failed / category.total) * 100}%` }}
-                          />
-                          <div 
-                            className="bg-gradient-to-r from-yellow-400 to-orange-400"
-                            style={{ width: `${(category.skipped / category.total) * 100}%` }}
-                          />
-                        </div>
+                      <div className="text-center">
+                        <div className="text-xl font-bold text-red-600">{category.failed}</div>
+                        <div className="text-xs text-slate-500 uppercase tracking-wide">Fail</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-xl font-bold text-yellow-600">{category.skipped}</div>
+                        <div className="text-xs text-slate-500 uppercase tracking-wide">Skip</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Visual Progress */}
+                  <div className="w-80">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-slate-500">Performance</span>
+                      <span className="text-lg font-bold text-slate-900">{categoryPassRate}%</span>
+                    </div>
+                    <div className="h-3 bg-slate-100 rounded-full overflow-hidden shadow-inner">
+                      <div className="flex h-full">
+                        <div 
+                          className="bg-emerald-500 transition-all duration-700"
+                          style={{ width: `${(category.passed / category.total) * 100}%` }}
+                        />
+                        <div 
+                          className="bg-red-500 transition-all duration-700"
+                          style={{ width: `${(category.failed / category.total) * 100}%` }}
+                        />
+                        <div 
+                          className="bg-yellow-500 transition-all duration-700"
+                          style={{ width: `${(category.skipped / category.total) * 100}%` }}
+                        />
                       </div>
                     </div>
                   </div>
@@ -290,66 +285,62 @@ const TestDashboard = () => {
           </div>
         </div>
 
-        {/* Pipeline Status - Fluid Layout */}
+        {/* Pipeline Flow */}
         <div>
-          <h2 className="text-4xl font-bold text-white mb-8 tracking-tight">Pipeline Activity</h2>
+          <h2 className="text-4xl font-black text-slate-900 mb-12">Pipeline Activity</h2>
           
-          <div className="space-y-6">
+          <div className="space-y-12">
             {mockGHAData.map((run, index) => (
               <div 
                 key={index}
-                className={`relative group flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}
+                className={`flex items-start gap-8 ${index % 2 === 0 ? '' : 'flex-row-reverse'}`}
               >
-                <div className={`w-full max-w-4xl ${index % 2 === 0 ? 'lg:mr-20' : 'lg:ml-20'}`}>
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-600/20 to-slate-700/20 rounded-2xl blur-xl" />
-                  
-                  <div className="relative bg-slate-900/70 backdrop-blur-xl rounded-2xl p-6 border border-white/10 group-hover:border-white/20 transition-all duration-300">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className={cn("w-3 h-3 rounded-full", {
-                          'bg-emerald-400': run.status === 'success',
-                          'bg-red-400': run.status === 'failure',
-                          'bg-blue-400 animate-pulse': run.status === 'in_progress'
-                        })} />
-                        <div>
-                          <div className="text-lg font-semibold text-white">{run.workflowName}</div>
-                          <div className="text-sm text-slate-400">{run.runId}</div>
-                        </div>
-                      </div>
-                      
-                      <div className="text-right">
-                        <div className="text-sm text-slate-400">{run.environment}</div>
-                        <div className="text-xs text-slate-500">{run.startTime}</div>
-                      </div>
-                    </div>
-                    
-                    <div className="mb-4">
-                      <div className="text-sm text-slate-300 mb-2">{run.commitMessage}</div>
-                      <div className="flex items-center gap-4 text-xs text-slate-500">
-                        <span className="flex items-center gap-1">
-                          <GitBranch className="w-3 h-3" />
-                          {run.branch}
-                        </span>
-                        <span>{run.commitHash}</span>
-                        <span>{run.triggeredBy}</span>
-                      </div>
-                    </div>
-                    
-                    {run.status === 'in_progress' && (
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-slate-400">Progress</span>
-                          <span className="text-blue-400 font-semibold">{run.progress}%</span>
-                        </div>
-                        <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-gradient-to-r from-blue-400 to-cyan-400 transition-all duration-500"
-                            style={{ width: `${run.progress}%` }}
-                          />
-                        </div>
-                      </div>
-                    )}
+                {/* Status Indicator */}
+                <div className="flex flex-col items-center">
+                  <div className={cn("w-6 h-6 rounded-full border-4 border-white shadow-lg", {
+                    'bg-emerald-500': run.status === 'success',
+                    'bg-red-500': run.status === 'failure',
+                    'bg-blue-500 animate-pulse': run.status === 'in_progress'
+                  })} />
+                  {index < mockGHAData.length - 1 && (
+                    <div className="w-px h-16 bg-gradient-to-b from-slate-200 to-transparent mt-4" />
+                  )}
+                </div>
+                
+                {/* Pipeline Info */}
+                <div className={`flex-1 ${index % 2 === 0 ? 'text-left' : 'text-right'}`}>
+                  <div className="mb-4">
+                    <h3 className="text-xl font-bold text-slate-900 mb-1">{run.workflowName}</h3>
+                    <div className="text-sm text-slate-500">{run.runId} • {run.environment}</div>
                   </div>
+                  
+                  <div className="mb-4">
+                    <div className="text-slate-700 mb-2">{run.commitMessage}</div>
+                    <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <span className="flex items-center gap-1">
+                        <GitBranch className="w-3 h-3" />
+                        {run.branch}
+                      </span>
+                      <span>{run.commitHash}</span>
+                      <span>{run.triggeredBy}</span>
+                      <span>{run.startTime}</span>
+                    </div>
+                  </div>
+                  
+                  {run.status === 'in_progress' && (
+                    <div className="max-w-xs">
+                      <div className="flex justify-between text-sm mb-2">
+                        <span className="text-slate-500">Progress</span>
+                        <span className="text-blue-600 font-semibold">{run.progress}%</span>
+                      </div>
+                      <div className="h-2 bg-slate-100 rounded-full overflow-hidden shadow-inner">
+                        <div 
+                          className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-500"
+                          style={{ width: `${run.progress}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
