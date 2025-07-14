@@ -1,7 +1,9 @@
-
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, XCircle, AlertCircle, Clock, TestTube2, TrendingUp, Activity, GitBranch, Play, User, Calendar } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { CheckCircle2, XCircle, AlertCircle, Clock, BarChart3, TestTube2, TrendingUp, Activity } from 'lucide-react';
+import StatCard from './StatCard';
+import CategoryBreakdown from './CategoryBreakdown';
+import GHAInfo from './GHAInfo';
+import TestOverview from './TestOverview';
 
 // Mock data - replace with real data from your API
 const mockTestData = {
@@ -90,6 +92,19 @@ const mockGHAData = [
     triggeredBy: 'automated',
     commitHash: 'i9j0k1l2',
     commitMessage: 'refactor: Update dependency versions and security patches'
+  },
+  {
+    runId: '#1234567887',
+    workflowName: 'Deploy to Staging',
+    branch: 'release/v2.1.0',
+    environment: 'Staging',
+    status: 'pending' as const,
+    progress: 0,
+    startTime: '5 minutes ago',
+    duration: '0m 0s',
+    triggeredBy: 'release.bot',
+    commitHash: 'm3n4o5p6',
+    commitMessage: 'release: Prepare version 2.1.0 with new features'
   }
 ];
 
@@ -100,279 +115,84 @@ const TestDashboard = () => {
   const failRate = Math.round((overall.failed / overall.total) * 100);
   const skipRate = Math.round((overall.skipped / overall.total) * 100);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'success': return 'text-green-600';
-      case 'failure': return 'text-red-600';
-      case 'in_progress': return 'text-blue-600';
-      case 'pending': return 'text-yellow-600';
-      default: return 'text-muted-foreground';
-    }
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'success': return <CheckCircle2 className="w-3 h-3" />;
-      case 'failure': return <XCircle className="w-3 h-3" />;
-      case 'in_progress': return <Play className="w-3 h-3" />;
-      case 'pending': return <Clock className="w-3 h-3" />;
-      default: return <AlertCircle className="w-3 h-3" />;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Subtle Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-32 right-20 w-96 h-96 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full blur-3xl opacity-60" />
-        <div className="absolute bottom-40 left-16 w-80 h-80 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-full blur-3xl opacity-40" />
-        <div className="absolute top-1/3 left-1/3 w-72 h-72 bg-gradient-to-br from-orange-50 to-pink-50 rounded-full blur-3xl opacity-30" />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-8 py-12">
-        
-        {/* Fluid Header Layout */}
-        <div className="flex items-end justify-between mb-20">
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full" />
-              <span className="text-blue-600 text-sm font-semibold tracking-widest uppercase">Live Dashboard</span>
-            </div>
-            <h1 className="text-7xl font-black text-slate-900 leading-none mb-6">
-              Test
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Analytics</span>
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+      <div className="max-w-7xl mx-auto p-8 space-y-10">
+        {/* Modern Header */}
+        <div className="text-center space-y-6 py-8">
+          <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-gradient-to-r from-primary/10 to-blue-500/10 backdrop-blur-sm border border-border/20">
+            <TestTube2 className="w-8 h-8 text-primary mr-3" />
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+              Test Analytics
             </h1>
-            <p className="text-xl text-slate-600 max-w-xl leading-relaxed">
-              Monitor your test execution and CI/CD pipeline with real-time insights and performance metrics
-            </p>
+          </div>
+          <p className="text-muted-foreground text-xl max-w-2xl mx-auto leading-relaxed">
+            Real-time insights into test execution and CI/CD pipeline performance
+          </p>
+        </div>
+
+        {/* Key Metrics Section */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <TrendingUp className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="text-2xl font-semibold text-foreground">Key Metrics</h2>
+            </div>
+            <Badge variant="outline" className="text-sm px-4 py-2">
+              Last updated: 2 mins ago
+            </Badge>
           </div>
           
-          {/* Floating Score */}
-          <div className="relative mr-12">
-            <div className="absolute -inset-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full blur-2xl opacity-60" />
-            <div className="relative w-32 h-32 bg-white rounded-full shadow-2xl flex flex-col items-center justify-center border border-slate-100">
-              <div className="text-3xl font-black text-emerald-600">{passRate}%</div>
-              <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Health</div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <StatCard
+              title="Total Tests"
+              value={overall.total}
+              icon={<TestTube2 className="w-6 h-6" />}
+              color="blue"
+              subtitle="All test cases"
+            />
+            <StatCard
+              title="Passed"
+              value={overall.passed}
+              percentage={passRate}
+              icon={<CheckCircle2 className="w-6 h-6" />}
+              color="green"
+              subtitle={`${passRate}% success rate`}
+            />
+            <StatCard
+              title="Failed"
+              value={overall.failed}
+              percentage={failRate}
+              icon={<XCircle className="w-6 h-6" />}
+              color="red"
+              subtitle={`${failRate}% failure rate`}
+            />
+            <StatCard
+              title="Skipped"
+              value={overall.skipped}
+              percentage={skipRate}
+              icon={<Clock className="w-6 h-6" />}
+              color="yellow"
+              subtitle={`${skipRate}% skipped`}
+            />
           </div>
         </div>
 
-        {/* Flowing Metrics Section */}
-        <div className="relative mb-24">
-          {/* Main Stats Flow */}
-          <div className="flex flex-wrap items-start gap-12 mb-12">
-            <div className="flex items-baseline gap-4">
-              <div className="text-6xl font-black text-slate-900">{overall.total}</div>
-              <div className="text-lg text-slate-500 font-medium">Total Tests</div>
-            </div>
-            
-            <div className="h-16 w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent" />
-            
-            <div className="flex items-center gap-8">
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-4 bg-emerald-500 rounded-full" />
-                <div>
-                  <div className="text-3xl font-bold text-emerald-600">{overall.passed}</div>
-                  <div className="text-sm text-slate-500 -mt-1">Passed</div>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-4 bg-red-500 rounded-full" />
-                <div>
-                  <div className="text-3xl font-bold text-red-600">{overall.failed}</div>
-                  <div className="text-sm text-slate-500 -mt-1">Failed</div>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-4 bg-yellow-500 rounded-full" />
-                <div>
-                  <div className="text-3xl font-bold text-yellow-600">{overall.skipped}</div>
-                  <div className="text-sm text-slate-500 -mt-1">Skipped</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* Test Overview Section */}
+        <TestOverview 
+          passRate={passRate}
+          failRate={failRate}
+          skipRate={skipRate}
+          overall={overall}
+        />
 
-          {/* Organic Progress Visualization */}
-          <div className="relative">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-lg font-semibold text-slate-700">Test Health Distribution</span>
-              <span className="text-2xl font-bold text-slate-900">{passRate}% Success</span>
-            </div>
-            <div className="h-6 bg-slate-100 rounded-full overflow-hidden shadow-inner">
-              <div className="flex h-full">
-                <div 
-                  className="bg-gradient-to-r from-emerald-400 to-emerald-500 transition-all duration-1000 ease-out"
-                  style={{ width: `${passRate}%` }}
-                />
-                <div 
-                  className="bg-gradient-to-r from-red-400 to-red-500 transition-all duration-1000 ease-out"
-                  style={{ width: `${failRate}%` }}
-                />
-                <div 
-                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 transition-all duration-1000 ease-out"
-                  style={{ width: `${skipRate}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* GitHub Actions Section */}
+        <GHAInfo runs={mockGHAData} />
 
-        {/* Futuristic Category Layout */}
-        <div className="mb-24">
-          <h2 className="text-4xl font-black text-slate-900 mb-16">Test Categories</h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {categories.map((category, index) => {
-              const categoryPassRate = Math.round((category.passed / category.total) * 100);
-              const categoryFailRate = Math.round((category.failed / category.total) * 100);
-              const categorySkipRate = Math.round((category.skipped / category.total) * 100);
-              
-              return (
-                <div 
-                  key={index}
-                  className="group relative overflow-hidden"
-                >
-                  {/* Background gradient line */}
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
-                  
-                  <div className="pl-8 py-8 border-l border-slate-100 group-hover:border-transparent transition-all duration-300">
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-8">
-                      <div>
-                        <h3 className="text-2xl font-bold text-slate-900 mb-1">{category.name}</h3>
-                        <div className="text-slate-500 text-sm font-medium uppercase tracking-widest">{category.total} Tests Total</div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-3xl font-black text-slate-900">{categoryPassRate}%</div>
-                        <div className="text-xs text-slate-500 uppercase tracking-wider">Success</div>
-                      </div>
-                    </div>
-                    
-                    {/* Metrics Grid */}
-                    <div className="grid grid-cols-3 gap-6 mb-8">
-                      <div className="text-center group-hover:transform group-hover:scale-105 transition-transform duration-300">
-                        <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-2xl flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300">
-                          <div className="text-2xl font-black text-emerald-600">{category.passed}</div>
-                        </div>
-                        <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Passed</div>
-                      </div>
-                      
-                      <div className="text-center group-hover:transform group-hover:scale-105 transition-transform duration-300 delay-75">
-                        <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-red-100 to-red-200 rounded-2xl flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300">
-                          <div className="text-2xl font-black text-red-600">{category.failed}</div>
-                        </div>
-                        <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Failed</div>
-                      </div>
-                      
-                      <div className="text-center group-hover:transform group-hover:scale-105 transition-transform duration-300 delay-150">
-                        <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300">
-                          <div className="text-2xl font-black text-yellow-600">{category.skipped}</div>
-                        </div>
-                        <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Skipped</div>
-                      </div>
-                    </div>
-                    
-                    {/* Modern Progress Visualization */}
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-4">
-                        <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden relative">
-                          <div className="absolute inset-0 flex">
-                            <div 
-                              className="bg-emerald-500 h-full transition-all duration-1000 ease-out"
-                              style={{ width: `${categoryPassRate}%` }}
-                            />
-                            <div 
-                              className="bg-red-500 h-full transition-all duration-1000 ease-out"
-                              style={{ width: `${categoryFailRate}%` }}
-                            />
-                            <div 
-                              className="bg-yellow-500 h-full transition-all duration-1000 ease-out"
-                              style={{ width: `${categorySkipRate}%` }}
-                            />
-                          </div>
-                        </div>
-                        <div className="text-sm font-mono text-slate-400">{categoryPassRate}%</div>
-                      </div>
-                      
-                      {/* Detailed breakdown */}
-                      <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
-                        <span>PASS: {categoryPassRate}%</span>
-                        <span>FAIL: {categoryFailRate}%</span>
-                        <span>SKIP: {categorySkipRate}%</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Pipeline Flow */}
-        <div>
-          <h2 className="text-4xl font-black text-slate-900 mb-12">Pipeline Activity</h2>
-          
-          <div className="space-y-12">
-            {mockGHAData.map((run, index) => (
-              <div 
-                key={index}
-                className={`flex items-start gap-8 ${index % 2 === 0 ? '' : 'flex-row-reverse'}`}
-              >
-                {/* Status Indicator */}
-                <div className="flex flex-col items-center">
-                  <div className={cn("w-6 h-6 rounded-full border-4 border-white shadow-lg", {
-                    'bg-emerald-500': run.status === 'success',
-                    'bg-red-500': run.status === 'failure',
-                    'bg-blue-500 animate-pulse': run.status === 'in_progress'
-                  })} />
-                  {index < mockGHAData.length - 1 && (
-                    <div className="w-px h-16 bg-gradient-to-b from-slate-200 to-transparent mt-4" />
-                  )}
-                </div>
-                
-                {/* Pipeline Info */}
-                <div className={`flex-1 ${index % 2 === 0 ? 'text-left' : 'text-right'}`}>
-                  <div className="mb-4">
-                    <h3 className="text-xl font-bold text-slate-900 mb-1">{run.workflowName}</h3>
-                    <div className="text-sm text-slate-500">{run.runId} • {run.environment}</div>
-                  </div>
-                  
-                  <div className="mb-4">
-                    <div className="text-slate-700 mb-2">{run.commitMessage}</div>
-                    <div className="flex items-center gap-4 text-sm text-slate-500">
-                      <span className="flex items-center gap-1">
-                        <GitBranch className="w-3 h-3" />
-                        {run.branch}
-                      </span>
-                      <span>{run.commitHash}</span>
-                      <span>{run.triggeredBy}</span>
-                      <span>{run.startTime}</span>
-                    </div>
-                  </div>
-                  
-                  {run.status === 'in_progress' && (
-                    <div className="max-w-xs">
-                      <div className="flex justify-between text-sm mb-2">
-                        <span className="text-slate-500">Progress</span>
-                        <span className="text-blue-600 font-semibold">{run.progress}%</span>
-                      </div>
-                      <div className="h-2 bg-slate-100 rounded-full overflow-hidden shadow-inner">
-                        <div 
-                          className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-500"
-                          style={{ width: `${run.progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Category Breakdown */}
+        <CategoryBreakdown categories={categories} />
       </div>
     </div>
   );
