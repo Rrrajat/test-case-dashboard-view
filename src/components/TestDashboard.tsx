@@ -313,7 +313,10 @@ const TestDashboard = () => {
                     <div className="flex items-center justify-between mb-8">
                       <div>
                         <h3 className="text-2xl font-bold text-slate-900 mb-1">{category.name}</h3>
-                        <div className="text-slate-500 text-sm font-medium uppercase tracking-widest">{category.total} Tests Total</div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-slate-500 text-sm font-medium">{category.total}</span>
+                          <span className="text-slate-400 text-xs uppercase tracking-widest">Tests</span>
+                        </div>
                       </div>
                       <div className="text-right">
                         <div className="text-3xl font-black text-slate-900">{categoryPassRate}%</div>
@@ -322,31 +325,31 @@ const TestDashboard = () => {
                     </div>
                     
                     {/* Metrics Grid */}
-                    <div className="grid grid-cols-3 gap-6 mb-8">
+                    <div className="grid grid-cols-3 gap-6 mb-6">
                       <div className="text-center group-hover:transform group-hover:scale-105 transition-transform duration-300">
-                        <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-2xl flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300">
-                          <div className="text-2xl font-black text-emerald-600">{category.passed}</div>
+                        <div className="w-12 h-12 mx-auto mb-2 bg-emerald-50 rounded-xl flex items-center justify-center border border-emerald-100 group-hover:shadow-md transition-shadow duration-300">
+                          <div className="text-lg font-bold text-emerald-600">{category.passed}</div>
                         </div>
-                        <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Passed</div>
+                        <div className="text-xs text-emerald-600 font-medium">Passed</div>
                       </div>
                       
                       <div className="text-center group-hover:transform group-hover:scale-105 transition-transform duration-300 delay-75">
-                        <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-red-100 to-red-200 rounded-2xl flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300">
-                          <div className="text-2xl font-black text-red-600">{category.failed}</div>
+                        <div className="w-12 h-12 mx-auto mb-2 bg-red-50 rounded-xl flex items-center justify-center border border-red-100 group-hover:shadow-md transition-shadow duration-300">
+                          <div className="text-lg font-bold text-red-600">{category.failed}</div>
                         </div>
-                        <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Failed</div>
+                        <div className="text-xs text-red-600 font-medium">Failed</div>
                       </div>
                       
                       <div className="text-center group-hover:transform group-hover:scale-105 transition-transform duration-300 delay-150">
-                        <div className="w-16 h-16 mx-auto mb-3 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-2xl flex items-center justify-center group-hover:shadow-lg transition-shadow duration-300">
-                          <div className="text-2xl font-black text-yellow-600">{category.skipped}</div>
+                        <div className="w-12 h-12 mx-auto mb-2 bg-yellow-50 rounded-xl flex items-center justify-center border border-yellow-100 group-hover:shadow-md transition-shadow duration-300">
+                          <div className="text-lg font-bold text-yellow-600">{category.skipped}</div>
                         </div>
-                        <div className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Skipped</div>
+                        <div className="text-xs text-yellow-600 font-medium">Skipped</div>
                       </div>
                     </div>
                     
-                    {/* Modern Progress Visualization */}
-                    <div className="space-y-3">
+                    {/* Clean Progress Bar */}
+                    <div className="space-y-2">
                       <div className="flex items-center gap-4">
                         <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden relative">
                           <div className="absolute inset-0 flex">
@@ -364,14 +367,7 @@ const TestDashboard = () => {
                             />
                           </div>
                         </div>
-                        <div className="text-sm font-mono text-slate-400">{categoryPassRate}%</div>
-                      </div>
-                      
-                      {/* Detailed breakdown */}
-                      <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
-                        <span>PASS: {categoryPassRate}%</span>
-                        <span>FAIL: {categoryFailRate}%</span>
-                        <span>SKIP: {categorySkipRate}%</span>
+                        <div className="text-sm font-semibold text-slate-600">{categoryPassRate}%</div>
                       </div>
                     </div>
                   </div>
