@@ -320,54 +320,30 @@ const TestDashboard = () => {
                       </div>
                       <div className="text-right">
                         <div className="text-3xl font-black text-slate-900">{categoryPassRate}%</div>
-                        <div className="text-xs text-slate-500 uppercase tracking-wider">Success</div>
+                        <div className="text-xs text-slate-500 uppercase tracking-wider">Success Rate</div>
                       </div>
                     </div>
                     
-                    {/* Metrics Grid */}
-                    <div className="grid grid-cols-3 gap-6 mb-6">
-                      <div className="text-center group-hover:transform group-hover:scale-105 transition-transform duration-300">
-                        <div className="w-12 h-12 mx-auto mb-2 bg-emerald-50 rounded-xl flex items-center justify-center border border-emerald-100 group-hover:shadow-md transition-shadow duration-300">
-                          <div className="text-lg font-bold text-emerald-600">{category.passed}</div>
+                    {/* Modern Metrics Layout */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-8">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                          <span className="text-2xl font-bold text-emerald-600">{category.passed}</span>
+                          <span className="text-sm text-slate-500">passed</span>
                         </div>
-                        <div className="text-xs text-emerald-600 font-medium">Passed</div>
-                      </div>
-                      
-                      <div className="text-center group-hover:transform group-hover:scale-105 transition-transform duration-300 delay-75">
-                        <div className="w-12 h-12 mx-auto mb-2 bg-red-50 rounded-xl flex items-center justify-center border border-red-100 group-hover:shadow-md transition-shadow duration-300">
-                          <div className="text-lg font-bold text-red-600">{category.failed}</div>
+                        
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                          <span className="text-2xl font-bold text-red-600">{category.failed}</span>
+                          <span className="text-sm text-slate-500">failed</span>
                         </div>
-                        <div className="text-xs text-red-600 font-medium">Failed</div>
-                      </div>
-                      
-                      <div className="text-center group-hover:transform group-hover:scale-105 transition-transform duration-300 delay-150">
-                        <div className="w-12 h-12 mx-auto mb-2 bg-yellow-50 rounded-xl flex items-center justify-center border border-yellow-100 group-hover:shadow-md transition-shadow duration-300">
-                          <div className="text-lg font-bold text-yellow-600">{category.skipped}</div>
+                        
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                          <span className="text-2xl font-bold text-yellow-600">{category.skipped}</span>
+                          <span className="text-sm text-slate-500">skipped</span>
                         </div>
-                        <div className="text-xs text-yellow-600 font-medium">Skipped</div>
-                      </div>
-                    </div>
-                    
-                    {/* Clean Progress Bar */}
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-4">
-                        <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden relative">
-                          <div className="absolute inset-0 flex">
-                            <div 
-                              className="bg-emerald-500 h-full transition-all duration-1000 ease-out"
-                              style={{ width: `${categoryPassRate}%` }}
-                            />
-                            <div 
-                              className="bg-red-500 h-full transition-all duration-1000 ease-out"
-                              style={{ width: `${categoryFailRate}%` }}
-                            />
-                            <div 
-                              className="bg-yellow-500 h-full transition-all duration-1000 ease-out"
-                              style={{ width: `${categorySkipRate}%` }}
-                            />
-                          </div>
-                        </div>
-                        <div className="text-sm font-semibold text-slate-600">{categoryPassRate}%</div>
                       </div>
                     </div>
                   </div>
