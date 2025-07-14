@@ -312,65 +312,97 @@ const TestDashboard = () => {
           </div>
         </div>
 
-        {/* Pipeline Flow */}
+        {/* Current Pipeline Context */}
         <div>
-          <h2 className="text-4xl font-black text-slate-900 mb-12">Pipeline Activity</h2>
+          <h2 className="text-4xl font-black text-slate-900 mb-8">Current Pipeline</h2>
+          <p className="text-lg text-slate-600 mb-12">Test data from the following pipeline run</p>
           
-          <div className="space-y-12">
-            {mockGHAData.map((run, index) => (
-              <div 
-                key={index}
-                className={`flex items-start gap-8 ${index % 2 === 0 ? '' : 'flex-row-reverse'}`}
-              >
-                {/* Status Indicator */}
-                <div className="flex flex-col items-center">
-                  <div className={cn("w-6 h-6 rounded-full border-4 border-white shadow-lg", {
-                    'bg-emerald-500': run.status === 'success',
-                    'bg-red-500': run.status === 'failure',
-                    'bg-blue-500 animate-pulse': run.status === 'in_progress'
-                  })} />
-                  {index < mockGHAData.length - 1 && (
-                    <div className="w-px h-16 bg-gradient-to-b from-slate-200 to-transparent mt-4" />
-                  )}
+          {/* Single Pipeline Display */}
+          <div className="relative">
+            {/* Background decoration */}
+            <div className="absolute -inset-8 bg-gradient-to-br from-blue-50/50 to-purple-50/50 rounded-3xl blur-xl" />
+            
+            <div className="relative bg-white rounded-2xl shadow-xl border border-slate-200/50 p-8">
+              {/* Pipeline Header */}
+              <div className="flex items-start justify-between mb-8">
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={cn("w-3 h-3 rounded-full", {
+                      'bg-emerald-500': mockGHAData[0].status === 'success',
+                      'bg-red-500': mockGHAData[0].status === 'failure',
+                      'bg-blue-500 animate-pulse': mockGHAData[0].status === 'in_progress'
+                    })} />
+                    <Badge className={cn("text-xs font-semibold", getStatusColor(mockGHAData[0].status))}>
+                      {getStatusIcon(mockGHAData[0].status)}
+                      <span className="ml-1">{mockGHAData[0].status.replace('_', ' ').toUpperCase()}</span>
+                    </Badge>
+                  </div>
+                  <h3 className="text-3xl font-black text-slate-900 mb-2">{mockGHAData[0].workflowName}</h3>
+                  <div className="text-slate-500 font-medium">{mockGHAData[0].runId} • {mockGHAData[0].environment}</div>
                 </div>
                 
-                {/* Pipeline Info */}
-                <div className={`flex-1 ${index % 2 === 0 ? 'text-left' : 'text-right'}`}>
-                  <div className="mb-4">
-                    <h3 className="text-xl font-bold text-slate-900 mb-1">{run.workflowName}</h3>
-                    <div className="text-sm text-slate-500">{run.runId} • {run.environment}</div>
-                  </div>
-                  
-                  <div className="mb-4">
-                    <div className="text-slate-700 mb-2">{run.commitMessage}</div>
-                    <div className="flex items-center gap-4 text-sm text-slate-500">
-                      <span className="flex items-center gap-1">
-                        <GitBranch className="w-3 h-3" />
-                        {run.branch}
-                      </span>
-                      <span>{run.commitHash}</span>
-                      <span>{run.triggeredBy}</span>
-                      <span>{run.startTime}</span>
+                {/* Status Circle */}
+                <div className="relative">
+                  <div className="absolute -inset-3 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-lg opacity-60" />
+                  <div className="relative w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center border border-slate-100">
+                    <div className={cn("text-2xl", getStatusColor(mockGHAData[0].status))}>
+                      {getStatusIcon(mockGHAData[0].status)}
                     </div>
                   </div>
-                  
-                  {run.status === 'in_progress' && (
-                    <div className="max-w-xs">
-                      <div className="flex justify-between text-sm mb-2">
-                        <span className="text-slate-500">Progress</span>
-                        <span className="text-blue-600 font-semibold">{run.progress}%</span>
-                      </div>
-                      <div className="h-2 bg-slate-100 rounded-full overflow-hidden shadow-inner">
-                        <div 
-                          className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-500"
-                          style={{ width: `${run.progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
-            ))}
+              
+              {/* Pipeline Details Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div className="space-y-3">
+                  <div className="text-sm text-slate-500 font-semibold uppercase tracking-wider">Branch & Commit</div>
+                  <div className="flex items-center gap-2 text-lg font-bold text-slate-900">
+                    <GitBranch className="w-4 h-4 text-blue-600" />
+                    {mockGHAData[0].branch}
+                  </div>
+                  <div className="font-mono text-sm bg-slate-100 px-3 py-1.5 rounded-lg">
+                    {mockGHAData[0].commitHash}
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="text-sm text-slate-500 font-semibold uppercase tracking-wider">Execution Info</div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <User className="w-4 h-4 text-slate-400" />
+                      <span className="font-medium">{mockGHAData[0].triggeredBy}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-slate-700">
+                      <Clock className="w-4 h-4 text-slate-400" />
+                      <span>{mockGHAData[0].startTime} • {mockGHAData[0].duration}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="text-sm text-slate-500 font-semibold uppercase tracking-wider">Progress</div>
+                  <div className="text-3xl font-black text-slate-900">{mockGHAData[0].progress}%</div>
+                  <div className="h-3 bg-slate-100 rounded-full overflow-hidden shadow-inner">
+                    <div 
+                      className={cn("h-full transition-all duration-1000 ease-out", {
+                        'bg-gradient-to-r from-emerald-400 to-emerald-500': mockGHAData[0].status === 'success',
+                        'bg-gradient-to-r from-red-400 to-red-500': mockGHAData[0].status === 'failure',
+                        'bg-gradient-to-r from-blue-400 to-blue-500': mockGHAData[0].status === 'in_progress'
+                      })}
+                      style={{ width: `${mockGHAData[0].progress}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Commit Message */}
+              <div className="border-t border-slate-100 pt-6">
+                <div className="text-sm text-slate-500 font-semibold uppercase tracking-wider mb-3">Latest Commit</div>
+                <div className="text-lg text-slate-800 leading-relaxed">
+                  {mockGHAData[0].commitMessage}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
