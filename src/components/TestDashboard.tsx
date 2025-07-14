@@ -131,29 +131,98 @@ const TestDashboard = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-8 py-12">
         
-        {/* Fluid Header Layout */}
-        <div className="flex items-end justify-between mb-20">
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-8">
+        {/* Fluid Header Layout with Current Pipeline */}
+        <div className="mb-20">
+          {/* Current Pipeline Context - Top Priority */}
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-6">
               <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full" />
-              <span className="text-blue-600 text-sm font-semibold tracking-widest uppercase">Live Dashboard</span>
+              <span className="text-blue-600 text-sm font-semibold tracking-widest uppercase">Current Pipeline</span>
             </div>
-            <h1 className="text-7xl font-black text-slate-900 leading-none mb-6">
-              Test
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Analytics</span>
-            </h1>
-            <p className="text-xl text-slate-600 max-w-xl leading-relaxed">
-              Monitor your test execution and CI/CD pipeline with real-time insights and performance metrics
-            </p>
+            
+            {/* Pipeline Header Info */}
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-6">
+                <div className={cn("w-4 h-4 rounded-full", {
+                  'bg-emerald-500': mockGHAData[0].status === 'success',
+                  'bg-red-500': mockGHAData[0].status === 'failure',
+                  'bg-blue-500 animate-pulse': mockGHAData[0].status === 'in_progress'
+                })} />
+                <h2 className="text-3xl font-black text-slate-900">{mockGHAData[0].workflowName}</h2>
+                <Badge className={cn("text-xs font-semibold", getStatusColor(mockGHAData[0].status))}>
+                  {getStatusIcon(mockGHAData[0].status)}
+                  <span className="ml-1">{mockGHAData[0].status.replace('_', ' ').toUpperCase()}</span>
+                </Badge>
+              </div>
+              
+              <div className="text-right">
+                <div className="text-2xl font-black text-slate-900">{mockGHAData[0].progress}%</div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider">Complete</div>
+              </div>
+            </div>
+            
+            {/* Pipeline Details Inline */}
+            <div className="flex items-center gap-8 text-slate-600 mb-6">
+              <div className="flex items-center gap-2">
+                <GitBranch className="w-4 h-4 text-blue-600" />
+                <span className="font-semibold">{mockGHAData[0].branch}</span>
+              </div>
+              <div className="h-4 w-px bg-slate-300" />
+              <div className="flex items-center gap-2">
+                <span className="text-slate-500">Run:</span>
+                <span className="font-mono text-sm">{mockGHAData[0].runId}</span>
+              </div>
+              <div className="h-4 w-px bg-slate-300" />
+              <div className="flex items-center gap-2">
+                <User className="w-4 h-4 text-slate-400" />
+                <span>{mockGHAData[0].triggeredBy}</span>
+              </div>
+              <div className="h-4 w-px bg-slate-300" />
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-slate-400" />
+                <span>{mockGHAData[0].startTime}</span>
+              </div>
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="max-w-md">
+              <div className="h-2 bg-slate-100 rounded-full overflow-hidden shadow-inner">
+                <div 
+                  className={cn("h-full transition-all duration-1000 ease-out", {
+                    'bg-gradient-to-r from-emerald-400 to-emerald-500': mockGHAData[0].status === 'success',
+                    'bg-gradient-to-r from-red-400 to-red-500': mockGHAData[0].status === 'failure',
+                    'bg-gradient-to-r from-blue-400 to-blue-500': mockGHAData[0].status === 'in_progress'
+                  })}
+                  style={{ width: `${mockGHAData[0].progress}%` }}
+                />
+              </div>
+            </div>
           </div>
-          
-          {/* Floating Score */}
-          <div className="relative mr-12">
-            <div className="absolute -inset-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full blur-2xl opacity-60" />
-            <div className="relative w-32 h-32 bg-white rounded-full shadow-2xl flex flex-col items-center justify-center border border-slate-100">
-              <div className="text-3xl font-black text-emerald-600">{passRate}%</div>
-              <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Health</div>
+
+          {/* Main Title Section */}
+          <div className="flex items-end justify-between">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-1 h-8 bg-gradient-to-b from-emerald-500 to-teal-500 rounded-full" />
+                <span className="text-emerald-600 text-sm font-semibold tracking-widest uppercase">Test Analytics</span>
+              </div>
+              <h1 className="text-7xl font-black text-slate-900 leading-none mb-6">
+                Test
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Results</span>
+              </h1>
+              <p className="text-xl text-slate-600 max-w-xl leading-relaxed">
+                Real-time insights and performance metrics from your test execution
+              </p>
+            </div>
+            
+            {/* Floating Score */}
+            <div className="relative mr-12">
+              <div className="absolute -inset-4 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full blur-2xl opacity-60" />
+              <div className="relative w-32 h-32 bg-white rounded-full shadow-2xl flex flex-col items-center justify-center border border-slate-100">
+                <div className="text-3xl font-black text-emerald-600">{passRate}%</div>
+                <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Health</div>
+              </div>
             </div>
           </div>
         </div>
@@ -312,99 +381,6 @@ const TestDashboard = () => {
           </div>
         </div>
 
-        {/* Current Pipeline Context */}
-        <div>
-          <h2 className="text-4xl font-black text-slate-900 mb-8">Current Pipeline</h2>
-          <p className="text-lg text-slate-600 mb-12">Test data from the following pipeline run</p>
-          
-          {/* Single Pipeline Display */}
-          <div className="relative">
-            {/* Background decoration */}
-            <div className="absolute -inset-8 bg-gradient-to-br from-blue-50/50 to-purple-50/50 rounded-3xl blur-xl" />
-            
-            <div className="relative bg-white rounded-2xl shadow-xl border border-slate-200/50 p-8">
-              {/* Pipeline Header */}
-              <div className="flex items-start justify-between mb-8">
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className={cn("w-3 h-3 rounded-full", {
-                      'bg-emerald-500': mockGHAData[0].status === 'success',
-                      'bg-red-500': mockGHAData[0].status === 'failure',
-                      'bg-blue-500 animate-pulse': mockGHAData[0].status === 'in_progress'
-                    })} />
-                    <Badge className={cn("text-xs font-semibold", getStatusColor(mockGHAData[0].status))}>
-                      {getStatusIcon(mockGHAData[0].status)}
-                      <span className="ml-1">{mockGHAData[0].status.replace('_', ' ').toUpperCase()}</span>
-                    </Badge>
-                  </div>
-                  <h3 className="text-3xl font-black text-slate-900 mb-2">{mockGHAData[0].workflowName}</h3>
-                  <div className="text-slate-500 font-medium">{mockGHAData[0].runId} • {mockGHAData[0].environment}</div>
-                </div>
-                
-                {/* Status Circle */}
-                <div className="relative">
-                  <div className="absolute -inset-3 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-lg opacity-60" />
-                  <div className="relative w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center border border-slate-100">
-                    <div className={cn("text-2xl", getStatusColor(mockGHAData[0].status))}>
-                      {getStatusIcon(mockGHAData[0].status)}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Pipeline Details Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div className="space-y-3">
-                  <div className="text-sm text-slate-500 font-semibold uppercase tracking-wider">Branch & Commit</div>
-                  <div className="flex items-center gap-2 text-lg font-bold text-slate-900">
-                    <GitBranch className="w-4 h-4 text-blue-600" />
-                    {mockGHAData[0].branch}
-                  </div>
-                  <div className="font-mono text-sm bg-slate-100 px-3 py-1.5 rounded-lg">
-                    {mockGHAData[0].commitHash}
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="text-sm text-slate-500 font-semibold uppercase tracking-wider">Execution Info</div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-slate-700">
-                      <User className="w-4 h-4 text-slate-400" />
-                      <span className="font-medium">{mockGHAData[0].triggeredBy}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-slate-700">
-                      <Clock className="w-4 h-4 text-slate-400" />
-                      <span>{mockGHAData[0].startTime} • {mockGHAData[0].duration}</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="text-sm text-slate-500 font-semibold uppercase tracking-wider">Progress</div>
-                  <div className="text-3xl font-black text-slate-900">{mockGHAData[0].progress}%</div>
-                  <div className="h-3 bg-slate-100 rounded-full overflow-hidden shadow-inner">
-                    <div 
-                      className={cn("h-full transition-all duration-1000 ease-out", {
-                        'bg-gradient-to-r from-emerald-400 to-emerald-500': mockGHAData[0].status === 'success',
-                        'bg-gradient-to-r from-red-400 to-red-500': mockGHAData[0].status === 'failure',
-                        'bg-gradient-to-r from-blue-400 to-blue-500': mockGHAData[0].status === 'in_progress'
-                      })}
-                      style={{ width: `${mockGHAData[0].progress}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
-              
-              {/* Commit Message */}
-              <div className="border-t border-slate-100 pt-6">
-                <div className="text-sm text-slate-500 font-semibold uppercase tracking-wider mb-3">Latest Commit</div>
-                <div className="text-lg text-slate-800 leading-relaxed">
-                  {mockGHAData[0].commitMessage}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
