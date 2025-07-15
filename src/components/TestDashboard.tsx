@@ -2,6 +2,8 @@
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle2, XCircle, AlertCircle, Clock, TestTube2, TrendingUp, Activity, GitBranch, Play, User, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import TestCaseModal, { TestStatus } from './TestCaseModal';
 
 // Mock data - replace with real data from your API
 const mockTestData = {
@@ -95,10 +97,31 @@ const mockGHAData = [
 
 const TestDashboard = () => {
   const { overall, categories } = mockTestData;
+  const [modalState, setModalState] = useState<{
+    isOpen: boolean;
+    status: TestStatus;
+    category?: string;
+  }>({
+    isOpen: false,
+    status: 'passed',
+    category: undefined
+  });
   
   const passRate = Math.round((overall.passed / overall.total) * 100);
   const failRate = Math.round((overall.failed / overall.total) * 100);
   const skipRate = Math.round((overall.skipped / overall.total) * 100);
+
+  const handleCountClick = (status: TestStatus, category?: string) => {
+    setModalState({
+      isOpen: true,
+      status,
+      category
+    });
+  };
+
+  const closeModal = () => {
+    setModalState({ ...modalState, isOpen: false });
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -239,27 +262,36 @@ const TestDashboard = () => {
             <div className="h-16 w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent" />
             
             <div className="flex items-center gap-8">
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-4 bg-emerald-500 rounded-full" />
+              <div 
+                className="flex items-center gap-3 cursor-pointer group"
+                onClick={() => handleCountClick('passed')}
+              >
+                <div className="w-4 h-4 bg-emerald-500 rounded-full group-hover:scale-110 transition-transform" />
                 <div>
-                  <div className="text-3xl font-bold text-emerald-600">{overall.passed}</div>
-                  <div className="text-sm text-slate-500 -mt-1">Passed</div>
+                  <div className="text-3xl font-bold text-emerald-600 group-hover:text-emerald-700 transition-colors">{overall.passed}</div>
+                  <div className="text-sm text-slate-500 -mt-1 group-hover:text-slate-600 transition-colors">Passed</div>
                 </div>
               </div>
               
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-4 bg-red-500 rounded-full" />
+              <div 
+                className="flex items-center gap-3 cursor-pointer group"
+                onClick={() => handleCountClick('failed')}
+              >
+                <div className="w-4 h-4 bg-red-500 rounded-full group-hover:scale-110 transition-transform" />
                 <div>
-                  <div className="text-3xl font-bold text-red-600">{overall.failed}</div>
-                  <div className="text-sm text-slate-500 -mt-1">Failed</div>
+                  <div className="text-3xl font-bold text-red-600 group-hover:text-red-700 transition-colors">{overall.failed}</div>
+                  <div className="text-sm text-slate-500 -mt-1 group-hover:text-slate-600 transition-colors">Failed</div>
                 </div>
               </div>
               
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-4 bg-yellow-500 rounded-full" />
+              <div 
+                className="flex items-center gap-3 cursor-pointer group"
+                onClick={() => handleCountClick('skipped')}
+              >
+                <div className="w-4 h-4 bg-yellow-500 rounded-full group-hover:scale-110 transition-transform" />
                 <div>
-                  <div className="text-3xl font-bold text-yellow-600">{overall.skipped}</div>
-                  <div className="text-sm text-slate-500 -mt-1">Skipped</div>
+                  <div className="text-3xl font-bold text-yellow-600 group-hover:text-yellow-700 transition-colors">{overall.skipped}</div>
+                  <div className="text-sm text-slate-500 -mt-1 group-hover:text-slate-600 transition-colors">Skipped</div>
                 </div>
               </div>
             </div>
@@ -327,22 +359,31 @@ const TestDashboard = () => {
                     {/* Modern Metrics Layout */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-8">
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
-                          <span className="text-2xl font-bold text-emerald-600">{category.passed}</span>
-                          <span className="text-sm text-slate-500">passed</span>
+                        <div 
+                          className="flex items-center gap-2 cursor-pointer group"
+                          onClick={() => handleCountClick('passed', category.name)}
+                        >
+                          <div className="w-3 h-3 bg-emerald-500 rounded-full group-hover:scale-125 transition-transform"></div>
+                          <span className="text-2xl font-bold text-emerald-600 group-hover:text-emerald-700 transition-colors">{category.passed}</span>
+                          <span className="text-sm text-slate-500 group-hover:text-slate-600 transition-colors">passed</span>
                         </div>
                         
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                          <span className="text-2xl font-bold text-red-600">{category.failed}</span>
-                          <span className="text-sm text-slate-500">failed</span>
+                        <div 
+                          className="flex items-center gap-2 cursor-pointer group"
+                          onClick={() => handleCountClick('failed', category.name)}
+                        >
+                          <div className="w-3 h-3 bg-red-500 rounded-full group-hover:scale-125 transition-transform"></div>
+                          <span className="text-2xl font-bold text-red-600 group-hover:text-red-700 transition-colors">{category.failed}</span>
+                          <span className="text-sm text-slate-500 group-hover:text-slate-600 transition-colors">failed</span>
                         </div>
                         
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                          <span className="text-2xl font-bold text-yellow-600">{category.skipped}</span>
-                          <span className="text-sm text-slate-500">skipped</span>
+                        <div 
+                          className="flex items-center gap-2 cursor-pointer group"
+                          onClick={() => handleCountClick('skipped', category.name)}
+                        >
+                          <div className="w-3 h-3 bg-yellow-500 rounded-full group-hover:scale-125 transition-transform"></div>
+                          <span className="text-2xl font-bold text-yellow-600 group-hover:text-yellow-700 transition-colors">{category.skipped}</span>
+                          <span className="text-sm text-slate-500 group-hover:text-slate-600 transition-colors">skipped</span>
                         </div>
                       </div>
                     </div>
@@ -354,6 +395,15 @@ const TestDashboard = () => {
         </div>
 
       </div>
+
+      {/* Test Case Modal */}
+      <TestCaseModal
+        isOpen={modalState.isOpen}
+        onClose={closeModal}
+        status={modalState.status}
+        testCases={[]}
+        category={modalState.category}
+      />
     </div>
   );
 };
