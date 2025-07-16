@@ -95,7 +95,11 @@ const mockGHAData = [
   }
 ];
 
-const TestDashboard = () => {
+interface TestDashboardProps {
+  runId: string;
+}
+
+const TestDashboard = ({ runId }: TestDashboardProps) => {
   const { overall, categories } = mockTestData;
   const [modalState, setModalState] = useState<{
     isOpen: boolean;
@@ -193,7 +197,7 @@ const TestDashboard = () => {
               <div className="h-4 w-px bg-slate-300" />
               <div className="flex items-center gap-2">
                 <span className="text-slate-500">Run:</span>
-                <span className="font-mono text-sm">{mockGHAData[0].runId}</span>
+                <span className="font-mono text-sm">#{runId}</span>
               </div>
               <div className="h-4 w-px bg-slate-300" />
               <div className="flex items-center gap-2">
