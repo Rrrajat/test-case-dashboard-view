@@ -126,19 +126,15 @@ const TestCaseModal = ({ isOpen, onClose, status, testCases, category }: TestCas
   const StatusIcon = statusConfig.icon;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-end">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-300"
+        className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-500"
         onClick={onClose}
       />
       
-      {/* Bottom Sheet */}
-      <div className="relative w-full max-w-6xl mx-4 mb-4 bg-white rounded-3xl shadow-2xl animate-slide-in-bottom max-h-[85vh] flex flex-col">
-        {/* Handle */}
-        <div className="flex justify-center pt-4 pb-2">
-          <div className="w-12 h-1.5 bg-slate-300 rounded-full" />
-        </div>
+      {/* Side Panel */}
+      <div className="relative w-full max-w-6xl h-full bg-white shadow-2xl animate-slide-in-right-slow flex flex-col">
 
         {/* Header */}
         <div className={cn("px-8 py-6 border-b border-slate-100")}>
