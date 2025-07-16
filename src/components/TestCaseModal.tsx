@@ -186,42 +186,40 @@ const TestCaseModal = ({ isOpen, onClose, status, testCases, category }: TestCas
             <div className="grid grid-cols-12 h-full">
               {/* Test List */}
               <div className="col-span-5 border-r border-slate-100 overflow-auto">
-                <div className="p-6">
-                  <div className="space-y-3">
+                <div className="p-4">
+                  <div className="space-y-2">
                     {filteredTestCases.map((testCase, index) => (
                       <div
                         key={testCase.id}
                         onClick={() => setSelectedTestCase(testCase)}
                         className={cn(
-                          "p-4 rounded-2xl border cursor-pointer transition-all duration-200",
+                          "p-3 rounded-lg cursor-pointer transition-all duration-200",
                           "animate-fade-in",
                           selectedTestCase?.id === testCase.id
-                            ? "border-slate-200 bg-slate-50 shadow-md scale-[1.02]"
-                            : "border-slate-100 hover:border-slate-200 hover:shadow-sm hover:scale-[1.01]"
+                            ? "bg-slate-100 border-l-2 border-l-slate-900"
+                            : "hover:bg-slate-50 border-l-2 border-l-transparent"
                         )}
                         style={{ animationDelay: `${index * 50}ms` }}
                       >
-                        <div className="flex items-start justify-between mb-3">
-                          <h3 className="font-semibold text-slate-900 line-clamp-2 leading-tight text-sm">
+                        <div className="flex items-start justify-between mb-2">
+                          <h3 className="font-medium text-slate-900 line-clamp-2 text-sm leading-tight">
                             {testCase.name}
                           </h3>
-                          <div className="flex items-center gap-2 ml-3">
-                            <Badge variant="secondary" className="text-xs">
-                              {testCase.duration}
-                            </Badge>
-                          </div>
+                          <span className="text-xs text-slate-500 ml-2 shrink-0">
+                            {testCase.duration}
+                          </span>
                         </div>
                         
-                        <div className="flex items-center gap-2 text-xs text-slate-600 mb-2">
-                          <span className="font-medium">{testCase.suite}</span>
-                          <div className="w-1 h-1 bg-slate-400 rounded-full" />
+                        <div className="flex items-center text-xs text-slate-500 mb-2">
+                          <span>{testCase.suite}</span>
+                          <span className="mx-1">•</span>
                           <span>{testCase.category}</span>
                         </div>
                         
                         {testCase.error && (
-                          <p className="text-xs text-red-600 line-clamp-2 bg-red-50 p-2 rounded-lg font-mono">
+                          <div className="text-xs text-red-600 line-clamp-1 bg-red-50 px-2 py-1 rounded font-mono">
                             {testCase.error}
-                          </p>
+                          </div>
                         )}
                       </div>
                     ))}
@@ -230,69 +228,61 @@ const TestCaseModal = ({ isOpen, onClose, status, testCases, category }: TestCas
               </div>
 
               {/* Test Details */}
-              <div className="col-span-7 overflow-auto bg-slate-50/50">
+              <div className="col-span-7 overflow-auto bg-white">
                 {selectedTestCase ? (
                   <div className="p-6">
                     <div className="mb-6">
-                      <div className="flex items-start gap-4 mb-4">
-                        <div className={cn("p-2 rounded-xl", statusConfig.bgColor)}>
-                          <StatusIcon className={cn("w-5 h-5", statusConfig.color)} />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-xl font-bold text-slate-900 mb-2">
-                            {selectedTestCase.name}
-                          </h3>
-                          {selectedTestCase.description && (
-                            <p className="text-slate-600 leading-relaxed">
-                              {selectedTestCase.description}
-                            </p>
-                          )}
-                        </div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className={cn("w-2 h-2 rounded-full", 
+                          selectedTestCase.status === 'passed' ? 'bg-emerald-500' :
+                          selectedTestCase.status === 'failed' ? 'bg-red-500' : 'bg-yellow-500'
+                        )} />
+                        <h3 className="text-lg font-semibold text-slate-900">
+                          {selectedTestCase.name}
+                        </h3>
                       </div>
+                      {selectedTestCase.description && (
+                        <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                          {selectedTestCase.description}
+                        </p>
+                      )}
                     </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-4">
                       {/* Test Information */}
-                      <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                        <h4 className="font-semibold text-slate-900 mb-4 flex items-center gap-2">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full" />
-                          Test Information
-                        </h4>
-                        <div className="grid grid-cols-2 gap-4 text-sm">
-                          <div className="flex items-center gap-3">
-                            <Hash className="w-4 h-4 text-slate-400" />
-                            <span className="text-slate-600">ID:</span>
-                            <span className="font-mono text-slate-900 bg-slate-100 px-2 py-1 rounded-lg text-xs">
+                      <div>
+                        <h4 className="text-sm font-medium text-slate-900 mb-3">Details</h4>
+                        <div className="space-y-3 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">Test ID</span>
+                            <span className="font-mono text-slate-900 text-xs bg-slate-100 px-2 py-1 rounded">
                               {selectedTestCase.id}
                             </span>
                           </div>
-                          <div className="flex items-center gap-3">
-                            <TestTube2 className="w-4 h-4 text-slate-400" />
-                            <span className="text-slate-600">Suite:</span>
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">Suite</span>
                             <span className="text-slate-900">{selectedTestCase.suite}</span>
                           </div>
-                          <div className="flex items-center gap-3">
-                            <Calendar className="w-4 h-4 text-slate-400" />
-                            <span className="text-slate-600">Executed:</span>
-                            <span className="text-slate-900">{selectedTestCase.timestamp}</span>
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">Category</span>
+                            <span className="text-slate-900">{selectedTestCase.category}</span>
                           </div>
-                          <div className="flex items-center gap-3">
-                            <span className="text-slate-600">Duration:</span>
-                            <Badge className="bg-slate-100 text-slate-700 hover:bg-slate-200">
-                              {selectedTestCase.duration}
-                            </Badge>
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">Duration</span>
+                            <span className="text-slate-900 font-mono">{selectedTestCase.duration}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-slate-500">Executed</span>
+                            <span className="text-slate-900">{selectedTestCase.timestamp}</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Error Details */}
                       {selectedTestCase.error && (
-                        <div className="bg-white rounded-2xl p-6 shadow-sm border border-red-100">
-                          <h4 className="font-semibold text-red-900 mb-4 flex items-center gap-2">
-                            <div className="w-2 h-2 bg-red-500 rounded-full" />
-                            Error Details
-                          </h4>
-                          <div className="bg-red-50 rounded-xl p-4 border border-red-100">
+                        <div>
+                          <h4 className="text-sm font-medium text-red-900 mb-3">Error</h4>
+                          <div className="bg-red-50 border border-red-100 rounded-lg p-3">
                             <pre className="text-sm text-red-800 font-mono whitespace-pre-wrap leading-relaxed">
                               {selectedTestCase.error}
                             </pre>
@@ -302,12 +292,9 @@ const TestCaseModal = ({ isOpen, onClose, status, testCases, category }: TestCas
 
                       {/* Success Details */}
                       {selectedTestCase.status === 'passed' && (
-                        <div className="bg-white rounded-2xl p-6 shadow-sm border border-emerald-100">
-                          <h4 className="font-semibold text-emerald-900 mb-4 flex items-center gap-2">
-                            <div className="w-2 h-2 bg-emerald-500 rounded-full" />
-                            Test Passed Successfully
-                          </h4>
-                          <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+                        <div>
+                          <h4 className="text-sm font-medium text-emerald-900 mb-3">Result</h4>
+                          <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-3">
                             <p className="text-emerald-800 text-sm">
                               All assertions passed and the test completed within the expected timeframe.
                             </p>
@@ -317,12 +304,9 @@ const TestCaseModal = ({ isOpen, onClose, status, testCases, category }: TestCas
 
                       {/* Skip Details */}
                       {selectedTestCase.status === 'skipped' && (
-                        <div className="bg-white rounded-2xl p-6 shadow-sm border border-yellow-100">
-                          <h4 className="font-semibold text-yellow-900 mb-4 flex items-center gap-2">
-                            <div className="w-2 h-2 bg-yellow-500 rounded-full" />
-                            Test Skipped
-                          </h4>
-                          <div className="bg-yellow-50 rounded-xl p-4 border border-yellow-100">
+                        <div>
+                          <h4 className="text-sm font-medium text-yellow-900 mb-3">Status</h4>
+                          <div className="bg-yellow-50 border border-yellow-100 rounded-lg p-3">
                             <p className="text-yellow-800 text-sm">
                               This test was skipped during execution, possibly due to conditional logic or test configuration.
                             </p>
@@ -334,11 +318,10 @@ const TestCaseModal = ({ isOpen, onClose, status, testCases, category }: TestCas
                 ) : (
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center">
-                      <div className="w-16 h-16 bg-white rounded-2xl shadow-sm mx-auto mb-4 flex items-center justify-center">
-                        <TestTube2 className="w-8 h-8 text-slate-400" />
+                      <div className="w-12 h-12 bg-slate-100 rounded-lg mx-auto mb-3 flex items-center justify-center">
+                        <TestTube2 className="w-6 h-6 text-slate-400" />
                       </div>
-                      <p className="text-slate-600 font-medium">Select a test to view details</p>
-                      <p className="text-slate-500 text-sm mt-1">Click on any test case to see detailed information</p>
+                      <p className="text-slate-600 text-sm">Select a test to view details</p>
                     </div>
                   </div>
                 )}
