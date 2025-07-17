@@ -42,7 +42,7 @@ const Index = () => {
 
   // Landing page with run ID input
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <div className="w-full max-w-7xl mx-auto px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-screen">
           
@@ -65,7 +65,7 @@ const Index = () => {
 
             {/* Features Grid */}
             <div className="grid grid-cols-1 gap-4">
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 p-4 bg-glass-subtle backdrop-blur-glass border border-glass rounded-xl shadow-glass">
                 <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <TrendingUp className="w-5 h-5 text-emerald-600" />
                 </div>
@@ -75,7 +75,7 @@ const Index = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 p-4 bg-glass-subtle backdrop-blur-glass border border-glass rounded-xl shadow-glass">
                 <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <Activity className="w-5 h-5 text-blue-600" />
                 </div>
@@ -85,7 +85,7 @@ const Index = () => {
                 </div>
               </div>
               
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 p-4 bg-glass-subtle backdrop-blur-glass border border-glass rounded-xl shadow-glass">
                 <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <TestTube2 className="w-5 h-5 text-purple-600" />
                 </div>
@@ -99,7 +99,7 @@ const Index = () => {
             {/* Preview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Stats Preview */}
-              <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+              <div className="bg-glass-medium backdrop-blur-glass border border-glass rounded-xl p-5 shadow-glass">
                 <h3 className="text-sm font-semibold text-slate-900 mb-4">What You'll See</h3>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -118,7 +118,7 @@ const Index = () => {
               </div>
 
               {/* Visual Indicators */}
-              <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+              <div className="bg-glass-medium backdrop-blur-glass border border-glass rounded-xl p-5 shadow-glass">
                 <h4 className="text-sm font-semibold text-slate-900 mb-4">Test Categories</h4>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -157,7 +157,7 @@ const Index = () => {
           <div className="flex flex-col justify-center items-center lg:items-end">
             <div className="w-full max-w-md lg:max-w-lg">
               {/* Input Card */}
-              <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm mb-6">
+              <div className="bg-glass-strong backdrop-blur-glass border border-glass rounded-2xl p-8 shadow-glass mb-6">
                 <div className="text-center mb-6">
                   <h2 className="text-xl font-semibold text-slate-900 mb-2">
                     Get Started
@@ -174,7 +174,7 @@ const Index = () => {
                       placeholder="e.g., 1234567890"
                       value={runId}
                       onChange={(e) => setRunId(e.target.value)}
-                      className="pl-10 h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl text-center"
+                      className="pl-10 h-12 bg-glass-subtle backdrop-blur-glass border-glass focus:border-blue-500 focus:ring-blue-500/20 rounded-xl text-center"
                     />
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
                   </div>
@@ -189,7 +189,7 @@ const Index = () => {
               </div>
 
               {/* How to find Run ID */}
-              <div className="bg-slate-100 rounded-xl p-5 text-sm">
+              <div className="bg-glass-medium backdrop-blur-glass border border-glass rounded-xl p-5 text-sm shadow-glass">
                 <h4 className="font-medium text-slate-900 mb-3">How to find your Run ID:</h4>
                 <ol className="space-y-2 text-slate-600">
                   <li className="flex items-start gap-2">

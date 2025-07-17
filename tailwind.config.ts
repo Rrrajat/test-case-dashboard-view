@@ -63,6 +63,21 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
+			backgroundColor: {
+				'glass': 'rgba(var(--glass-bg))',
+				'glass-subtle': 'rgba(var(--glass-subtle))',
+				'glass-medium': 'rgba(var(--glass-medium))',
+				'glass-strong': 'rgba(var(--glass-strong))'
+			},
+			borderColor: {
+				'glass': 'rgba(var(--glass-border))'
+			},
+			backdropBlur: {
+				'glass': 'var(--glass-backdrop)'
+			},
+			boxShadow: {
+				'glass': 'var(--glass-shadow)'
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
