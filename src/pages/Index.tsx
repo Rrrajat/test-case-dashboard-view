@@ -42,66 +42,97 @@ const Index = () => {
 
   // Landing page with run ID input
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="w-full max-w-2xl mx-auto px-8 text-center">
-        {/* Header */}
-        <div className="mb-12">
-          <div className="flex justify-center mb-8">
-            <TestTube2 className="w-12 h-12 text-blue-600" />
-          </div>
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center py-12">
+      <div className="w-full max-w-6xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
-          <h1 className="text-6xl font-black text-slate-900 leading-tight mb-4">
-            Test
-            <br />
-            <span className="text-blue-600">Analytics</span>
-          </h1>
-          
-          <p className="text-xl text-slate-600 max-w-lg mx-auto leading-relaxed">
-            Enter a GitHub Actions run ID to view detailed test results and analytics
-          </p>
-        </div>
+          {/* Left Column - Input Card */}
+          <div className="flex flex-col items-center lg:items-start">
+            <div className="w-full max-w-md">
+              {/* Logo */}
+              <div className="flex justify-center lg:justify-start mb-8">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
+                  <TestTube2 className="w-8 h-8 text-white" />
+                </div>
+              </div>
+              
+              {/* Title */}
+              <div className="text-center lg:text-left mb-8">
+                <h1 className="text-4xl font-bold text-slate-900 mb-2">
+                  Test Analytics
+                </h1>
+                <p className="text-slate-600">
+                  Analyze your GitHub Actions test results
+                </p>
+              </div>
 
-        {/* Input Form */}
-        <form onSubmit={handleSubmit} className="mb-12">
-          <div className="flex gap-3 max-w-md mx-auto">
-            <div className="flex-1 relative">
-              <Input
-                type="text"
-                placeholder="Enter run ID (e.g., 1234567890)"
-                value={runId}
-                onChange={(e) => setRunId(e.target.value)}
-                className="pl-10 h-12 text-lg border-slate-200 focus:border-blue-500 focus:ring-blue-500 rounded-lg"
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+              {/* Input Card */}
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="relative">
+                    <Input
+                      type="text"
+                      placeholder="Enter GitHub Actions run ID"
+                      value={runId}
+                      onChange={(e) => setRunId(e.target.value)}
+                      className="pl-10 h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                    />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  </div>
+                  <Button 
+                    type="submit" 
+                    className="w-full h-12 bg-blue-600 hover:bg-blue-700 rounded-xl font-medium"
+                    disabled={!runId.trim()}
+                  >
+                    Analyze Results
+                  </Button>
+                </form>
+              </div>
             </div>
-            <Button 
-              type="submit" 
-              className="h-12 px-8 bg-blue-600 hover:bg-blue-700 rounded-lg"
-              disabled={!runId.trim()}
-            >
-              Analyze
-            </Button>
           </div>
-        </form>
 
-        {/* Features */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <div className="p-4">
-            <TrendingUp className="w-8 h-8 text-emerald-600 mx-auto mb-4" />
-            <h3 className="font-semibold text-slate-900 mb-2">Performance Insights</h3>
-            <p className="text-sm text-slate-600">Real-time test metrics and success rates</p>
-          </div>
-          
-          <div className="p-4">
-            <Activity className="w-8 h-8 text-blue-600 mx-auto mb-4" />
-            <h3 className="font-semibold text-slate-900 mb-2">Detailed Breakdown</h3>
-            <p className="text-sm text-slate-600">Category-wise test results and analysis</p>
-          </div>
-          
-          <div className="p-4">
-            <TestTube2 className="w-8 h-8 text-purple-600 mx-auto mb-4" />
-            <h3 className="font-semibold text-slate-900 mb-2">Test Case Details</h3>
-            <p className="text-sm text-slate-600">Individual test information and error logs</p>
+          {/* Right Column - Features */}
+          <div className="space-y-8">
+            <div className="text-center lg:text-left mb-8">
+              <h2 className="text-2xl font-semibold text-slate-900 mb-3">
+                Powerful Test Analytics
+              </h2>
+              <p className="text-slate-600">
+                Get comprehensive insights into your test performance with detailed breakdowns and real-time metrics.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <TrendingUp className="w-6 h-6 text-emerald-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-900 mb-1">Performance Insights</h3>
+                  <p className="text-slate-600 text-sm">Real-time test metrics, success rates, and performance trends across your CI/CD pipeline.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Activity className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-900 mb-1">Detailed Breakdown</h3>
+                  <p className="text-slate-600 text-sm">Category-wise test results with comprehensive analysis and failure patterns.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <TestTube2 className="w-6 h-6 text-purple-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-900 mb-1">Test Case Details</h3>
+                  <p className="text-slate-600 text-sm">Individual test information with error logs and execution details for debugging.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
