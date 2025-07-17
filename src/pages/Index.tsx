@@ -43,107 +43,110 @@ const Index = () => {
   // Landing page with run ID input
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="w-full max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <div className="w-full max-w-7xl mx-auto px-6 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-screen">
           
           {/* Left Column - Features & Preview */}
-          <div className="space-y-12">
+          <div className="space-y-8">
             {/* Header */}
             <div className="text-center lg:text-left">
-              <div className="flex justify-center lg:justify-start mb-6">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
-                  <TestTube2 className="w-8 h-8 text-white" />
+              <div className="flex justify-center lg:justify-start mb-4">
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                  <TestTube2 className="w-6 h-6 text-white" />
                 </div>
               </div>
-              <h1 className="text-5xl font-bold text-slate-900 mb-4">
+              <h1 className="text-4xl font-bold text-slate-900 mb-3">
                 Test Analytics
               </h1>
-              <p className="text-xl text-slate-600 leading-relaxed">
+              <p className="text-lg text-slate-600 leading-relaxed">
                 Transform your GitHub Actions test data into actionable insights with comprehensive analytics and real-time monitoring.
               </p>
             </div>
 
             {/* Features Grid */}
-            <div className="grid grid-cols-1 gap-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="w-6 h-6 text-emerald-600" />
+            <div className="grid grid-cols-1 gap-4">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <TrendingUp className="w-5 h-5 text-emerald-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900 mb-2">Performance Insights</h3>
-                  <p className="text-slate-600">Real-time test metrics, success rates, and performance trends across your CI/CD pipeline with detailed execution timings.</p>
+                  <h3 className="font-semibold text-slate-900 mb-1">Performance Insights</h3>
+                  <p className="text-sm text-slate-600">Real-time test metrics, success rates, and performance trends across your CI/CD pipeline.</p>
                 </div>
               </div>
               
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Activity className="w-6 h-6 text-blue-600" />
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Activity className="w-5 h-5 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900 mb-2">Detailed Breakdown</h3>
-                  <p className="text-slate-600">Category-wise test results with comprehensive analysis, failure patterns, and historical comparisons to identify trends.</p>
+                  <h3 className="font-semibold text-slate-900 mb-1">Detailed Breakdown</h3>
+                  <p className="text-sm text-slate-600">Category-wise test results with comprehensive analysis and failure patterns.</p>
                 </div>
               </div>
               
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <TestTube2 className="w-6 h-6 text-purple-600" />
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <TestTube2 className="w-5 h-5 text-purple-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900 mb-2">Test Case Details</h3>
-                  <p className="text-slate-600">Individual test information with error logs, execution details, and debugging information for quick issue resolution.</p>
+                  <h3 className="font-semibold text-slate-900 mb-1">Test Case Details</h3>
+                  <p className="text-sm text-slate-600">Individual test information with error logs and debugging information.</p>
                 </div>
               </div>
             </div>
 
-            {/* Stats Preview */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-              <h3 className="text-lg font-semibold text-slate-900 mb-6">What You'll See</h3>
-              <div className="grid grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-emerald-600 mb-1">98.5%</div>
-                  <div className="text-sm text-slate-600">Success Rate</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 mb-1">247</div>
-                  <div className="text-sm text-slate-600">Total Tests</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-purple-600 mb-1">2.4s</div>
-                  <div className="text-sm text-slate-600">Avg Duration</div>
+            {/* Preview Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Stats Preview */}
+              <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                <h3 className="text-sm font-semibold text-slate-900 mb-4">What You'll See</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-slate-600">Success Rate</span>
+                    <span className="text-lg font-bold text-emerald-600">98.5%</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-slate-600">Total Tests</span>
+                    <span className="text-lg font-bold text-blue-600">247</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-slate-600">Avg Duration</span>
+                    <span className="text-lg font-bold text-purple-600">2.4s</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Visual Indicators */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-              <h4 className="font-medium text-slate-900 mb-4">Test Categories</h4>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600">Unit Tests</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-24 h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="w-[92%] h-full bg-emerald-500 rounded-full"></div>
+              {/* Visual Indicators */}
+              <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                <h4 className="text-sm font-semibold text-slate-900 mb-4">Test Categories</h4>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-slate-600">Unit Tests</span>
+                    <div className="flex items-center gap-2">
+                      <div className="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="w-[92%] h-full bg-emerald-500 rounded-full"></div>
+                      </div>
+                      <span className="text-xs font-medium text-slate-900">92%</span>
                     </div>
-                    <span className="text-sm font-medium text-slate-900">92%</span>
                   </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600">Integration Tests</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-24 h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="w-[88%] h-full bg-blue-500 rounded-full"></div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-slate-600">Integration</span>
+                    <div className="flex items-center gap-2">
+                      <div className="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="w-[88%] h-full bg-blue-500 rounded-full"></div>
+                      </div>
+                      <span className="text-xs font-medium text-slate-900">88%</span>
                     </div>
-                    <span className="text-sm font-medium text-slate-900">88%</span>
                   </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600">E2E Tests</span>
-                  <div className="flex items-center gap-2">
-                    <div className="w-24 h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="w-[76%] h-full bg-purple-500 rounded-full"></div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-slate-600">E2E Tests</span>
+                    <div className="flex items-center gap-2">
+                      <div className="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="w-[76%] h-full bg-purple-500 rounded-full"></div>
+                      </div>
+                      <span className="text-xs font-medium text-slate-900">76%</span>
                     </div>
-                    <span className="text-sm font-medium text-slate-900">76%</span>
                   </div>
                 </div>
               </div>
@@ -151,10 +154,10 @@ const Index = () => {
           </div>
 
           {/* Right Column - Input Card */}
-          <div className="flex flex-col items-center lg:items-end">
+          <div className="flex flex-col justify-center items-center lg:items-end">
             <div className="w-full max-w-md lg:max-w-lg">
               {/* Input Card */}
-              <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm mb-8">
+              <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm mb-6">
                 <div className="text-center mb-6">
                   <h2 className="text-xl font-semibold text-slate-900 mb-2">
                     Get Started
@@ -186,7 +189,7 @@ const Index = () => {
               </div>
 
               {/* How to find Run ID */}
-              <div className="bg-slate-100 rounded-xl p-6 text-sm">
+              <div className="bg-slate-100 rounded-xl p-5 text-sm">
                 <h4 className="font-medium text-slate-900 mb-3">How to find your Run ID:</h4>
                 <ol className="space-y-2 text-slate-600">
                   <li className="flex items-start gap-2">
